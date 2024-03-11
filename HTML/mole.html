@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whack-a-Mole</title>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #87CEEB; /* Sky Blue */
+      margin: 0;
+    }
+
+    .game-container {
+      position: relative;
+    }
+
+    .hole {
+      width: 80px;
+      height: 80px;
+      background-color: #8B4513; /* Saddle Brown */
+      border-radius: 50%;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      font-size: 20px;
+      font-weight: bold;
+      color: #FFFFFF; /* White */
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Whack-a-Mole</h1>
+
+  <div class="game-container" onclick="whack()">
+    <!-- Moles will appear here -->
+  </div>
+
+  <script>
+    const gameContainer = document.querySelector('.game-container');
+
+    function createMole() {
+      const mole = document.createElement('div');
+      mole.classList.add('hole');
+      mole.textContent = '🐭'; // Mole emoji
+      const randomX = Math.random() * (gameContainer.clientWidth - 80);
+      const randomY = Math.random() * (gameContainer.clientHeight - 80);
+      mole.style.left = `${randomX}px`;
+      mole.style.top = `${randomY}px`;
+      gameContainer.appendChild(mole);
+
+      // Remove the mole after a random time
+      setTimeout(() => {
+        mole.remove();
+      }, Math.random() * 2000 + 1000); // Random time between 1 and 3 seconds
+    }
+
+    function whack() {
+      // When a mole is whacked (clicked), increase the score
+      // You can customize the scoring mechanism as needed
+      console.log('Whacked!');
+    }
+
+    // Start creating moles every second
+    setInterval(createMole, 1000);
+  </script>
+
+</body>
+</html>

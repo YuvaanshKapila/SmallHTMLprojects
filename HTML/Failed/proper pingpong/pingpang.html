@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        * { padding: 0; margin: 0; }
+        canvas { background: #000; display: block; margin: 20px auto; }
+    </style>
+</head>
+<body>
+    
+<canvas id="pong" width="800" height="400"></canvas>
+
+<script>
+    const canvas = document.getElementById("pong");
+    const context = canvas.getContext("2d");
+
+    // Create the pong paddle
+    const paddleWidth = 50, paddleHeight = 10, player = (canvas.height - paddleHeight) / 2, computer = (canvas.height - paddleHeight) / 2;
+
+    // Create the pong ball
+    const ball = { x: canvas.width / 2, y: canvas.height / 2, radius: 10, speed: 2, dx: 2, dy: 2 };
+
+    // Draw the pong paddle
+    function drawPaddle(x, y, width, height, color) {
+        context.fillStyle = color;
+        context.fillRect(x, y, width, height);
+    }
+
+    // Draw the pong ball
+    function drawBall(x, y, radius, color) {
+        context.fillStyle = color;
+        context.beginPath();
+        context.arc(x, y, radius, 0, Math.PI * 2, false);
+        context.closePath();
+        context.fill();
+    }
+
+    // Moving Paddle
+    function paddleMove(e) {
+        let rect = canvas.getBoundingClientRect();
+        player.y = e.clientY - rect.top - paddleHeight / 2;
+        draw();
+    }
+
+    // Update the canvas
+    function update() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        drawPaddle(0, player, paddleWidth, paddleHeight, 'blue');
+        drawPaddle(canvas.width - paddleWidth, computer, paddleWidth, paddleHeight, 'red');
+        drawBall(ball.x, ball.y, ball.radius, 'white');
+        ball.x += ball.dx;
+        ball.y += ball.dy;
+        if(ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) ball.dy *= -1;
+        // Ball and paddle collision logic
+        if(ball.dy < 0) {
+            if(ball.x > player && ball.x < player + paddleWidth && ball.y < player + paddleHeight) ball.dy *= -1;
+            else if(ball.y < 0) ball.dy *= -1;
+        }
+        if(ball.dy > 0) {
+            if(ball.x > computer && ball.x < computer + paddleWidth && ball.y > canvas.height - paddleHeight) ball.dy *= -1;
+            else if(ball.y > canvas.height) ball.dy *= -1;
+        }
+        // Computer paddle logic
+        if(ball.y > computer) computer += 2;
+        else computer -= 2;
+    }
+
+    // Execute the update function every 10 ms
+    setInterval(update, 10);
+    canvas.addEventListener('mousemove', paddleMove);
+</script>
+
+</body>
+</html>

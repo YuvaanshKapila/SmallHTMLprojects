@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>eCommerce Shop</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <h1>eCommerce Shop</h1>
+    <a href="#" onclick="toggleCart()">View Cart</a>
+  </header>
+
+  <main>
+    <section id="products">
+      <h2>Products</h2>
+      <!-- Product items will be dynamically added here -->
+    </section>
+
+    <section id="cart">
+      <h2>Shopping Cart</h2>
+      <ul id="cartItems"></ul>
+      <p>Total: $<span id="total">0.00</span></p>
+      <button onclick="checkout()">Checkout</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

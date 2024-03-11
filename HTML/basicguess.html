@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #result {
+            color: green;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Number Guessing Game</h1>
+    <p>We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.</p>
+    <div class="form">
+        <label for="guessField">Enter a guess: </label>
+        <input type="text" id="guessField" class="guessField">
+        <input type="submit" value="Submit guess" class="guessSubmit">
+    </div>
+    <div id="result"></div>
+    <script>
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let guesses = 0;
+
+        document.querySelector('.guessSubmit').onclick = function() {
+            let userGuess = Number(document.querySelector('.guessField').value);
+            if (guesses === 0) {
+                document.querySelector('#result').textContent = 'Previous guesses: ';
+            }
+            guesses++;
+            if (userGuess === randomNumber) {
+                document.querySelector('#result').textContent += userGuess + ' ';
+                document.querySelector('#result').textContent += 'Congratulations! You got it right!';
+            } else if (guesses === 10) {
+                document.querySelector('#result').textContent += userGuess + ' ';
+                document.querySelector('#result').textContent += '!!!GAME OVER!!! The number was ' + randomNumber;
+            } else {
+                document.querySelector('#result').textContent += userGuess + ' ';
+                if(userGuess < randomNumber) {
+                    document.querySelector('#result').textContent += 'Too low! ';
+                } else if(userGuess > randomNumber) {
+                    document.querySelector('#result').textContent += 'Too high! ';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
